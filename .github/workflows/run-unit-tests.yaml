@@ -1,0 +1,33 @@
+name: Run unit tests
+on:
+  workflow_call:
+
+jobs:
+  run-go-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@90a06d6ba9543371ab4df8eeca0be07ca6054959
+        with:
+          files: |
+            .github/**
+            cmd/**
+            pkg/**
+            go.mod
+            go.sum
+            Makefile
+            **/*.go
+
+      - name: Set up Go environment
+        if: ${{ steps.changed-files.outputs.any_modified == 'true' }}
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: 'go.mod'
+
+      - name: Execute unit tests
+        if: ${{ steps.changed-files.outputs.any_modified == 'true' }}
+        run: make test
