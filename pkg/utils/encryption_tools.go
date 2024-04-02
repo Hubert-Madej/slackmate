@@ -26,25 +26,14 @@ func PreloadEncryptionKey(k string) ([]byte, error) {
 		return key, nil
 	}
 
-	// Decode encryption key if provided
 	decoded, err := hex.DecodeString(k)
 	if err != nil {
 		fmt.Println("Error decoding hexadecimal string:", err)
 		return nil, fmt.Errorf("error decoding encryption key: %v", err)
 	}
 
-	var keyBytes []byte
-	if len(decoded) >= 32 {
-		keyBytes = decoded[:32] // Truncate if longer than 32 bytes
-	} else {
-		keyBytes = make([]byte, 32)
-		copy(keyBytes, decoded) // Pad if shorter than 32 bytes
-	}
-
-	return keyBytes, nil
+	return decoded, nil
 }
-
-
 
 func Encrypt(data []byte, encryptionKey []byte) ([]byte, error) {
 	block, err := aes.NewCipher(encryptionKey)
