@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Hubert-Madej/slackmate/pkg/constants"
 	"github.com/Hubert-Madej/slackmate/pkg/models"
 	"github.com/Hubert-Madej/slackmate/pkg/utils"
 	"github.com/spf13/cobra"
@@ -56,7 +57,7 @@ func selectKeyForExecution(cmd *cobra.Command) string {
 		return encryptionKey
 	}
 
-	return os.Getenv("SLACKMATE_ENCRYPTION_KEY")
+	return os.Getenv(constants.SLACKMATE_ENCRYPTION_KEY)
 }
 
 func fatalOnError(err error) {

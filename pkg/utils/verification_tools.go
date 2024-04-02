@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Hubert-Madej/slackmate/pkg/constants"
 	"github.com/Hubert-Madej/slackmate/pkg/models"
 )
 
 func CheckAndSetEnvVariables(config *models.Config) {
-	apiToken := os.Getenv("SLACKMATE_API_TOKEN")
-	channel := os.Getenv("SLACKMATE_DEFAULT_CHANNEL")
+	apiToken := os.Getenv(constants.SLACKMATE_API_TOKEN)
+	channel := os.Getenv(constants.SLACKMATE_DEFAULT_CHANNEL)
 
 	if (apiToken == "" && config.APIToken == "") || (channel == "" && config.DefaultChannel == "") {
 		fmt.Println("To ensure smooth operation of the tool, please provide the following information:")
@@ -22,7 +23,7 @@ func CheckAndSetEnvVariables(config *models.Config) {
 		} else {
 			apiToken = config.APIToken
 		}
-		os.Setenv("SLACKMATE_API_TOKEN", apiToken)
+		os.Setenv(constants.SLACKMATE_API_TOKEN, apiToken)
 	}
 
 	if channel == "" {
@@ -32,7 +33,7 @@ func CheckAndSetEnvVariables(config *models.Config) {
 		} else {
 			channel = config.DefaultChannel
 		}
-		os.Setenv("SLACKMATE_DEFAULT_CHANNEL", channel)
+		os.Setenv(constants.SLACKMATE_DEFAULT_CHANNEL, channel)
 	}
 
 	config.APIToken = apiToken
